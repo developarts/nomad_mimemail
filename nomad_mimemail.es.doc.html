@@ -1,0 +1,858 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html">
+  <title>Nomad MIME Mail - Documentación</title><style type="text/css">
+	body {width: 600; background-color: #FFFFFF; margin: 20px; color: #365182; font-family: Century Gothic, Helvetica, Geneva, Arial; font-size: 10pt;}
+	a.doc:visited {color: #330099; text-decoration: none;}
+	a.doc:link {color: #1412F5; text-decoration: none;}
+	a.doc:hover {color: #FF1905; text-decoration: underline;}
+	h1.doc_h1 {color: #516D9A; font-family: Century Gothic, Helvetica, Geneva, Arial; font-size: 16pt; font-weight: bold;}
+	h2.doc_h2 {color: #516D9A; font-family: Century Gothic, Helvetica, Geneva, Arial; font-size: 14pt; font-weight: bold;}
+	h3.doc_h3 {color: #516D9A; font-family: Century Gothic, Helvetica, Geneva, Arial; font-size: 12pt; font-weight: bold;}
+	p.doc {text-align: justify; color: #365182; font-family:  Century Gothic, Helvetica, Geneva, Arial; font-size: 10pt;}
+	p.doc_param {padding-left: 30;}
+	li.doc_li {padding-left: 30;}
+	p.doc_bold {font-weight: bold;}
+	p.doc_italic {font-style: italic;}
+	p.doc_code {align: left; Font-family: Courier, courier new, fixed; font-size: 10pt; color: #0000A0;}
+	hr.doc_hr {border-color: #365182; border-style: solid; border-width: 1;}
+	div.doc_code {align: center; width: 95%; background-color: #F0F0F0; padding: 5; font-family: Courier, courier new, fixed; font-size: 10pt; color: #0000A0; overflow: auto; max-height: 400px; padding: 10px; border-style: dotted; border-width: 1px; border-color: #233E51;}
+	div.doc_index {font-size: 12pt;}
+</style>
+</head>
+
+<body>
+
+
+<!-- Comienza Titulo -->
+	<h1 class="doc_h1">Nomad MIME Mail 1.6 - Documentación.</h1>
+	<i>Copyright (C) 2003 - 2007 Alejandro García González.</i><br>
+	<i>Web: <a class="doc" target="_new" href="http://www.developarts.com">http://www.developarts.com</a></i><br>
+	<i>Correo: <a class="doc" href="mailto:nexus at developarts dot com">nexus at developarts dot com</a></i><br>
+	<hr class="doc_hr">
+<!-- Termina Titulo -->
+
+
+<!-- Comienza Indice -->
+	<h2 class="doc_h2">Tabla de Contenidos.</h2>
+
+	<div class="doc_index">
+	1. <a class="doc" href="#m-1">Descripción.</a><br>
+	2. <a class="doc" href="#m-2">Referencia Rápida.</a><br>
+	3. <a class="doc" href="#m-3">Referencia de las Funciones.</a><br>
+	4. <a class="doc" href="#m-4">Cambios en Versiones.</a><br>
+	5. <a class="doc" href="#m-5">Por hacer.</a><br>
+	6. <a class="doc" href="#m-6">Colaboradores.</a><br>
+	7. <a class="doc" href="#m-7">Licencia.</a>
+	</div>
+	<br>
+<!-- Termina Indice -->
+
+
+<!-- Comienza Descripción -->
+	<a class="doc" name="m-1"></a><h2 class="doc_h2">1. Descripción.</h2>
+	<p class="doc">Nomad MIME Mail (antes conocido como Nexus MIME Mail), es una clase para el manejo y envío de
+	correos tipo MIME, con soporte para el envío por SMTP y Auth SMTP</p>
+	<p class="doc">Actualmente este clase soporta:</p>
+	<ul>
+	<li class="doc_li">Texto Plano</li>
+	<li class="doc_li">HTML</li>
+	<li class="doc_li">Texto Plano con Adjuntos</li>
+	<li class="doc_li">HTML con Adjuntos</li>
+	<li class="doc_li">HTML con Imágenes Embebidas</li>
+	<li class="doc_li">HTML con Adjuntos e Imágenes Embebidas</li>
+	</ul>
+	<p class="doc">También soporta múltiples direcciones de correo de envío (to),
+	con copia (cc) y con copia oculta (bcc), así como varias imágenes embebidas en HTML
+	y varios adjuntos</p>
+	<br>
+<!-- Termina Descripción -->
+
+
+<!-- Comienza Referencia Rapida -->
+	<a class="doc" name="m-2"></a><h2 class="doc_h2">2. Referencia Rápida.</h2>
+	<p class="doc">Adjunto a esta clase y documentación se encuentra un
+	archivo llamado 'nomad_mimemail.test.php' donde se encuentra
+	un script con un ejemplo de envío de correo con Texto, HTML, Adjunto
+	e Imágen Embebida enviado por v&iacute;a SMTP.</p>
+	<p class="doc">Para usar Nomad MIME Mail es necesario declarar el objeto de
+	la siguiente forma:</p>
+	<div class="doc_code"><span style="color: #000000"><span style="color: #007700">include&nbsp;(</span><span style="color: #DD0000">'nomad_mimemail.inc.php'</span><span style="color: #007700">);<br />
+</span><span style="color: #0000BB">$mimemail&nbsp;</span><span style="color: #007700">=&nbsp;new&nbsp;</span><span style="color: #0000BB">nomad_mimemail</span><span style="color: #007700">();</span></span></div>
+
+	<br><br>
+	<p class="doc_bold">Texto Plano</p>
+	<p class="doc">Normalmente así es como funcionaría la función 'mail()'
+	de PHP, sin embargo en esta versión se crea de forma un
+	poco distinta ya que se envían las cabeceras y cuerpo del
+	mensaje de tipo MIME</p>
+	<div class="doc_code"><span style="color: #000000">
+<span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_from</span><span style="color: #007700">(</span><span style="color: #DD0000">"me@mail.com"</span><span style="color: #007700">);<br />
+</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_to</span><span style="color: #007700">(</span><span style="color: #DD0000">"friend@mail.com"</span><span style="color: #007700">);<br />
+</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_subject</span><span style="color: #007700">(</span><span style="color: #DD0000">"Nomad&nbsp;MIME&nbsp;Mail:&nbsp;Plain&nbsp;Text"</span><span style="color: #007700">);<br />
+</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_text</span><span style="color: #007700">(</span><span style="color: #DD0000">"This&nbsp;is&nbsp;a&nbsp;MIME&nbsp;Mail&nbsp;with:\n\n-&nbsp;Plain&nbsp;Text"</span><span style="color: #007700">);<br /><br />if&nbsp;(</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">send</span><span style="color: #007700">()){<br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">"The&nbsp;MIME&nbsp;Mail&nbsp;has&nbsp;been&nbsp;sent"</span><span style="color: #007700">;<br />}<br />else&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">"An&nbsp;error&nbsp;has&nbsp;occurred,&nbsp;mail&nbsp;was&nbsp;not&nbsp;sent"</span><span style="color: #007700">;<br />}
+</span></span></div>
+
+	<br><br>
+	<p class="doc_bold">Texto y HTML</p>
+	<p class="doc">Ejemplo de envío de correo con Texto y HTML</p>
+	<div class="doc_code"><span style="color: #000000">
+<span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_from</span><span style="color: #007700">(</span><span style="color: #DD0000">"me@mail.com"</span><span style="color: #007700">);<br />
+</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_to</span><span style="color: #007700">(</span><span style="color: #DD0000">"friend@mail.com"</span><span style="color: #007700">);<br />
+</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_subject</span><span style="color: #007700">(</span><span style="color: #DD0000">"Nomad&nbsp;MIME&nbsp;Mail:&nbsp;Plain&nbsp;Text&nbsp;+&nbsp;HTML"</span><span style="color: #007700">);<br />
+</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_text</span><span style="color: #007700">(</span><span style="color: #DD0000">"This&nbsp;is&nbsp;a&nbsp;MIME&nbsp;Mail&nbsp;with:\n\n-&nbsp;Plain&nbsp;Text\n-&nbsp;HTML"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_html</span><span style="color: #007700">(</span><span style="color: #DD0000">"&lt;HTML&gt;&lt;HEAD&gt;&lt;/HEAD&gt;&lt;BODY&gt;This&nbsp;is&nbsp;a&nbsp;&lt;b&gt;MIME&lt;/b&gt;&nbsp;Mail&nbsp;with:&lt;BR&gt;&lt;BR&gt;-&nbsp;Plain&nbsp;Text&lt;/BR&gt;-&nbsp;HTML&lt;/BODY&gt;&lt;/HTML&gt;"</span><span style="color: #007700">);<br /><br />if&nbsp;(</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">send</span><span style="color: #007700">()){<br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">"The&nbsp;MIME&nbsp;Mail&nbsp;has&nbsp;been&nbsp;sent"</span><span style="color: #007700">;<br />}<br />else&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">"An&nbsp;error&nbsp;has&nbsp;occurred,&nbsp;mail&nbsp;was&nbsp;not&nbsp;sent"</span><span style="color: #007700">;<br />}
+</span></span></div>
+
+
+	<br><br><p class="doc_bold">Texto Plano + Adjuntos</p>
+	<p class="doc">Ejemplo para crear un correo con Texto plano y un adjunto.
+	Se pueden agregar mas de un adjunto agregándolos con la funci&oacute;n
+	'add_attachment'. Para m&aacute;s informaci&oacute;n, revisar la referencia de la funci&oacute;n.</p>
+	<div class="doc_code"><span style="color: #000000">
+<span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_from</span><span style="color: #007700">(</span><span style="color: #DD0000">"me@mail.com"</span><span style="color: #007700">);<br />
+</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_to</span><span style="color: #007700">(</span><span style="color: #DD0000">"friend@mail.com"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_subject</span><span style="color: #007700">(</span><span style="color: #DD0000">"Nomad&nbsp;MIME&nbsp;Mail:&nbsp;Plain&nbsp;Text&nbsp;+&nbsp;Attachment"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_text</span><span style="color: #007700">(</span><span style="color: #DD0000">"This&nbsp;is&nbsp;a&nbsp;MIME&nbsp;Mail&nbsp;with:\n\n-&nbsp;Plain&nbsp;Text\n-&nbsp;Attachment"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">add_attachment</span><span style="color: #007700">(</span><span style="color: #DD0000">"test_attachment.tar.gz"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"file.tar.gz"</span><span style="color: #007700">);<br /><br />if&nbsp;(</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">send</span><span style="color: #007700">()){<br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">"The&nbsp;MIME&nbsp;Mail&nbsp;has&nbsp;been&nbsp;sent"</span><span style="color: #007700">;<br />}<br />else&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">"An&nbsp;error&nbsp;has&nbsp;occurred,&nbsp;mail&nbsp;was&nbsp;not&nbsp;sent"</span><span style="color: #007700">;<br />}
+</span></span></div>
+
+	<br><br><p class="doc_bold">Texto Plano + HTML + Adjuntos</p>
+	<p class="doc">Ejemplo para crear un correo con Texto Plano, HTML y un
+	adjunto. Se pueden agregar mas de un adjunto usando la funci&oacute;n 'add_attachment'.</p>
+	<div class="doc_code"><span style="color: #000000">
+<span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_from</span><span style="color: #007700">(</span><span style="color: #DD0000">"me@mail.com"</span><span style="color: #007700">);<br />
+</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_to</span><span style="color: #007700">(</span><span style="color: #DD0000">"friend@mail.com"</span><span style="color: #007700">);<br />
+</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_subject</span><span style="color: #007700">(</span><span style="color: #DD0000">"Nomad&nbsp;MIME&nbsp;Mail:&nbsp;Plain&nbsp;Text&nbsp;+&nbsp;HTML&nbsp;+&nbsp;Attachment"</span><span style="color: #007700">);<br />
+</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_text</span><span style="color: #007700">(</span><span style="color: #DD0000">"This&nbsp;is&nbsp;a&nbsp;MIME&nbsp;Mail&nbsp;with:\n\n-&nbsp;Plain&nbsp;Text\n-&nbsp;HTML\n-&nbsp;Attachment"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_html</span><span style="color: #007700">(</span><span style="color: #DD0000">"&lt;HTML&gt;&lt;HEAD&gt;&lt;/HEAD&gt;&lt;BODY&gt;This&nbsp;is&nbsp;a&nbsp;&lt;b&gt;MIME&lt;/b&gt;&nbsp;Mail&nbsp;with:&lt;BR&gt;&lt;BR&gt;-&nbsp;Plain&nbsp;Text&lt;/BR&gt;-&nbsp;HTML&lt;/BR&gt;-&nbsp;Attachment&lt;/BODY&gt;&lt;/HTML&gt;"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">add_attachment</span><span style="color: #007700">(</span><span style="color: #DD0000">"test_attachment.tar.gz"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"file.tar.gz"</span><span style="color: #007700">);<br /><br />if&nbsp;(</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">send</span><span style="color: #007700">()){<br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">"The&nbsp;MIME&nbsp;Mail&nbsp;has&nbsp;been&nbsp;sent"</span><span style="color: #007700">;<br />}<br />else&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">"An&nbsp;error&nbsp;has&nbsp;occurred,&nbsp;mail&nbsp;was&nbsp;not&nbsp;sent"</span><span style="color: #007700">;<br />}
+</span></span></div>
+
+	<br><br><p class="doc_bold">Texto Plano + HTML + Imagen Embebida</p>
+	<p class="doc">Ejemplo para crear un correo con HTML, texto plano y una
+	Imagen Embebida. Para que la imagen embebida funcione, el
+	archivo adjunto debe tener el  mismo nombre que se indique
+	en el tag 'IMG' del HTML del mensaje. </p>
+	<div class="doc_code"><span style="color: #000000">
+<span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_from</span><span style="color: #007700">(</span><span style="color: #DD0000">"me@mail.com"</span><span style="color: #007700">);<br />
+</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_to</span><span style="color: #007700">(</span><span style="color: #DD0000">"friend@mail.com"</span><span style="color: #007700">);<br />
+</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_subject</span><span style="color: #007700">(</span><span style="color: #DD0000">"Nomad&nbsp;MIME&nbsp;Mail:&nbsp;Plain&nbsp;Text&nbsp;+&nbsp;HTML&nbsp;+&nbsp;Embedded&nbsp;Image"</span><span style="color: #007700">);<br />
+</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_text</span><span style="color: #007700">(</span><span style="color: #DD0000">"This&nbsp;is&nbsp;a&nbsp;MIME&nbsp;Mail&nbsp;with:\n\n-&nbsp;Plain&nbsp;Text\n-&nbsp;HTML\n-&nbsp;Embedded&nbsp;Image"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_html</span><span style="color: #007700">(</span><span style="color: #DD0000">"&lt;HTML&gt;&lt;HEAD&gt;&lt;/HEAD&gt;&lt;BODY&gt;This&nbsp;is&nbsp;a&nbsp;&lt;b&gt;MIME&lt;/b&gt;&nbsp;Mail&nbsp;with:&lt;BR&gt;&lt;BR&gt;-&nbsp;Plain&nbsp;Text&lt;/BR&gt;-&nbsp;HTML&lt;/BR&gt;-&nbsp;Embedded&nbsp;Image&lt;/BR&gt;&lt;/BR&gt;&lt;img&nbsp;src='image.gif'&nbsp;border='0'&gt;&lt;/BODY&gt;&lt;/HTML&gt;"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">add_attachment</span><span style="color: #007700">(</span><span style="color: #DD0000">"test_image.gif"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"image.gif"</span><span style="color: #007700">);<br /><br />if&nbsp;(</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">send</span><span style="color: #007700">()){<br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">"The&nbsp;MIME&nbsp;Mail&nbsp;has&nbsp;been&nbsp;sent"</span><span style="color: #007700">;<br />}<br />else&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">"An&nbsp;error&nbsp;has&nbsp;occurred,&nbsp;mail&nbsp;was&nbsp;not&nbsp;sent"</span><span style="color: #007700">;<br />}
+</span></span></div>
+
+	<br><br><p class="doc_bold">Texto Plano + HTML + Imagen Embebida + Adjunto</p>
+	<p class="doc">Ejemplo para crear un correo con HTML, texto plano, una
+	Imagen Embebida y adjunto. Para que la imagen embebida
+	funcione, el archivo_adjunto debe  tener el mismo nombre
+	que se indique en el tag 'IMG'</p>
+	<div class="doc_code"><span style="color: #000000">
+<span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_from</span><span style="color: #007700">(</span><span style="color: #DD0000">"me@mail.com"</span><span style="color: #007700">);<br />
+</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_to</span><span style="color: #007700">(</span><span style="color: #DD0000">"friend@mail.com"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_subject</span><span style="color: #007700">(</span><span style="color: #DD0000">"Nomad&nbsp;MIME&nbsp;Mail:&nbsp;Plain&nbsp;Text&nbsp;+&nbsp;HTML&nbsp;+&nbsp;Embedded&nbsp;Image&nbsp;+&nbsp;Attachment"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_text</span><span style="color: #007700">(</span><span style="color: #DD0000">"This&nbsp;is&nbsp;a&nbsp;MIME&nbsp;Mail&nbsp;with:\n\n-&nbsp;Plain&nbsp;Text\n-&nbsp;HTML\n-&nbsp;Embedded&nbsp;Image\n-&nbsp;Attachment"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_html</span><span style="color: #007700">(</span><span style="color: #DD0000">"&lt;HTML&gt;&lt;HEAD&gt;&lt;/HEAD&gt;&lt;BODY&gt;This&nbsp;is&nbsp;a&nbsp;&lt;b&gt;MIME&lt;/b&gt;&nbsp;Mail&nbsp;with:&lt;BR&gt;&lt;BR&gt;-&nbsp;Plain&nbsp;Text&lt;/BR&gt;-&nbsp;HTML&lt;/BR&gt;-&nbsp;Embedded&nbsp;Image&lt;/BR&gt;-&nbsp;Attachment&lt;/BR&gt;&lt;/BR&gt;&lt;img&nbsp;src='image.gif'&nbsp;border='0'&gt;&lt;/BODY&gt;&lt;/HTML&gt;"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">add_attachment</span><span style="color: #007700">(</span><span style="color: #DD0000">"test_image"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"image.gif"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">add_attachment</span><span style="color: #007700">(</span><span style="color: #DD0000">"test_attachment.tar.gz"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"file.tar.gz"</span><span style="color: #007700">);<br /><br />if&nbsp;(</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">send</span><span style="color: #007700">()){<br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">"The&nbsp;MIME&nbsp;Mail&nbsp;has&nbsp;been&nbsp;sent"</span><span style="color: #007700">;<br />}<br />else&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">"An&nbsp;error&nbsp;has&nbsp;occurred,&nbsp;mail&nbsp;was&nbsp;not&nbsp;sent"</span><span style="color: #007700">;<br />}
+</span></span></div>
+
+	<br><br><p class="doc_bold">Envío por SMTP Autentificado</p>
+	<p class="doc">Para env&iacute;ar el correo v&iacute;a SMTP es necesario llamar a la funci&oacute;n 'set_smtp_host' y para enviar el correo usando la auteticaci&oacute;n del SMTP es necesario usar la funci&oacute;n 'set_smtp_auth'.</p>
+	<div class="doc_code"><span style="color: #000000">
+<span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_from</span><span style="color: #007700">(</span><span style="color: #DD0000">"me@mail.com"</span><span style="color: #007700">);<br />
+</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_to</span><span style="color: #007700">(</span><span style="color: #DD0000">"friend@mail.com"</span><span style="color: #007700">);<br />
+</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_subject</span><span style="color: #007700">(</span><span style="color: #DD0000">"Nomad&nbsp;MIME&nbsp;Mail:&nbsp;HTML&nbsp;+&nbsp;Auth&nbsp;SMTP"</span><span style="color: #007700">);<br />
+</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_html</span><span style="color: #007700">(</span><span style="color: #DD0000">"&lt;HTML&gt;&lt;HEAD&gt;&lt;/HEAD&gt;&lt;BODY&gt;This&nbsp;is&nbsp;a&nbsp;&lt;b&gt;MIME&lt;/b&gt;&nbsp;Mail&nbsp;with:&lt;BR&gt;&lt;BR&gt;-&nbsp;Plain&nbsp;Text&lt;/BR&gt;-&nbsp;HTML&lt;/BODY&gt;&lt;/HTML&gt;"</span><span style="color: #007700">);<br /><br /></span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_smtp_host</span><span style="color: #007700">(</span><span style="color: #DD0000">"domain.com"</span><span style="color: #007700">);<br /></span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_smtp_auth</span><span style="color: #007700">(</span><span style="color: #DD0000">"user"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"pass"</span><span style="color: #007700">);<br /><br />if&nbsp;(</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">send</span><span style="color: #007700">()){<br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">"The&nbsp;MIME&nbsp;Mail&nbsp;has&nbsp;been&nbsp;sent"</span><span style="color: #007700">;<br />}<br />else&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">"An&nbsp;error&nbsp;has&nbsp;occurred,&nbsp;mail&nbsp;was&nbsp;not&nbsp;sent"</span><span style="color: #007700">;<br />}
+</span></span></div>
+
+	<br>
+	<p class="doc">Por el momento esta versi&oacute;n
+	se encuentra en pruebas y agradecer&eacute; toda la ayuda posible para que esta clase soporte una gran cantidad de SMTP's. En caso de tener un error es posible revisar toda la conversaci&oacute;n que hace este script con el SMTP. para ello antes del 'send' llamaremos a la funci&oacute;n 'set_smtp_log' a true, y en el fallo podemos traer todo por medio de 'get_smtp_log' como a continuaci&oacute;n se ejemplifica:</p>
+	<div class="doc_code"><span style="color: #000000">
+<span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_smtp_log</span><span style="color: #007700">(</span><span style="color: #0000BB">true</span><span style="color: #007700">);<br />
+<br />if&nbsp;(</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">send</span><span style="color: #007700">()){<br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">"The&nbsp;MIME&nbsp;Mail&nbsp;has&nbsp;been&nbsp;sent"</span><span style="color: #007700">;<br />}<br />else&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">get_smtp_log</span><span style="color: #007700">();<br />}
+</span></span></div>
+	<br>
+	<p class="doc">Si es el caso, le pido que deje su reporte en <a class="doc" href="http://www.developarts.com/nomad_mimemail" target="_new">El Foro</a> de esta clase en donde tratar&eacute; de adaptar en lo posible las respuestas obtenidas del SMTP. </p>
+	<br>
+	  <!-- Termina Referencia Rapida -->
+
+	  <!-- Comienza Referencia de las Funciones -->
+	    <a class="doc" name="m-3"></a>
+	<h2 class="doc_h2">3. Referencia de las Funciones.</h2>
+	<table border="0" cellpadding="2" cellspacing="2">
+	<tr>
+		<td width="150"><a class="doc" href="#add_attachment">add_attachment</a></td>
+		<td>Agrega un archivo adjunto</td>
+	</tr>
+	<tr>
+		<td><a class="doc" href="#add_bcc">add_bcc</a></td>
+		<td>Agrega un correo con copia al carbón oculto</td>
+	</tr>
+	<tr>
+		<td><a class="doc" href="#add_cc">add_cc</a></td>
+		<td>Agrega un correo con copia al carbón</td>
+	</tr>
+	<tr>
+	  <td><a class="doc" href="#add_content_attachment">add_content_attachment</a></td>
+	  <td>Agrega un archivo adjunto enviando directamente el contenido </td>
+	  </tr>
+	<tr>
+	  <td><a class="doc" href="#add_reply_to">add_reply_to</a></td>
+	  <td>Agrega un correo de respuesta </td>
+	  </tr>
+	<tr>
+		<td><a class="doc" href="#add_to">add_to</a></td>
+		<td>Agrega un correo destino</td>
+	</tr>
+	<tr>
+		<td><a class="doc" href="#get_eml">get_eml</a></td>
+		<td>Entrega el formato EML del correo </td>
+	</tr>
+	<tr>
+	  <td><a class="doc" href="#get_smtp_log">get_smtp_log</a></td>
+	  <td>Entrega la Conversaci&oacute;n con el SMTP </td>
+	  </tr>
+	<tr>
+	  <td><a class="doc" href="#get_version">get_version</a></td>
+	  <td>Entrega el numero de versi&oacute;n de esta clase </td>
+	  </tr>
+	<tr>
+		<td><a class="doc" href="#new_mail">new_mail</a></td>
+		<td>Crea un correo nuevo</td>
+	</tr>
+	<tr>
+		<td><a class="doc" href="#nomad_mimemail">nomad_mimemail</a></td>
+		<td>Constructor</td>
+	</tr>
+	<tr>
+		<td><a class="doc" href="#send">send</a></td>
+		<td>Envía el correo MIME</td>
+	</tr>
+	<tr>
+		<td><a class="doc" href="#set_bcc">set_bcc</a></td>
+		<td>Establece un correo con copia al carbón oculto</td>
+	</tr>
+	<tr>
+		<td><a class="doc" href="#set_charset">set_charset</a></td>
+		<td>Establece el juego de caracteres usados en el correo</td>
+	</tr>
+	<tr>
+		<td><a class="doc" href="#set_cc">set_cc</a></td>
+		<td>Establece un correo con copia al carbón</td>
+	</tr>
+	<tr>
+		<td><a class="doc" href="#set_from">set_from</a></td>
+		<td>Establece el correo del remitente</td>
+	</tr>
+	<tr>
+		<td><a class="doc" href="#set_html">set_html</a></td>
+		<td>Establece el contenido del correo en HTML</td>
+	</tr>
+	<tr>
+		<td><a class="doc" href="#set_reply_to">set_reply_to</a></td>
+		<td>Establece el correo de respuesta</td>
+	</tr>
+	<tr>
+		<td><a class="doc" href="#set_return_path">set_return_path</a></td>
+		<td>Establece el correo de retorno</td>
+	</tr>
+	<tr>
+	  <td><a class="doc" href="#set_smtp_auth">set_smtp_auth</a></td>
+	  <td>Establece el nombre de usuario y contrase&ntilde;a para el env&iacute;o por Auth SMTP</td>
+	  </tr>
+	<tr>
+	  <td><a class="doc" href="#set_smtp_host">set_smtp_host</a></td>
+	  <td>Establece el host donde se enviar&aacute; el correo por SMTP</td>
+	  </tr>
+	<tr>
+	  <td><a class="doc" href="#set_smtp_log">set_smtp_log</a></td>
+	  <td>Estblece si se captura el log de conversaci&oacute;n entre esta clase y el SMTP </td>
+	  </tr>
+	<tr>
+		<td><a class="doc" href="#set_subject">set_subject</a></td>
+		<td>Establece el asunto del correo</td>
+	</tr>
+	<tr>
+		<td><a class="doc" href="#set_text">set_text</a></td>
+		<td>Establece el contenido del correo texto plano</td>
+	</tr>
+	<tr>
+		<td><a class="doc" href="#set_to">set_to</a></td>
+		<td>Establece un correo destino</td>
+	</tr>
+	</table>
+	<br>
+
+
+	<hr class="doc_hr"><br>
+	<a class="doc" name="add_attachment"></a><h3>add_attachment</h3>
+	<p class="doc_code">bool add_attachment(string file, string name, [string type])</p>
+	<p class="doc_bold">Descripción</p>
+	<p class="doc">Agrega un archivo adjunto al correo electrónico</p>
+	<p class="doc">En el parámetro 'file' se debe de proporcionar la ubicación
+	(ruta y nombre) del archivo que se quiere adjuntar. Este método
+	abre el archivo con fopen.</p>
+	<p class="doc">Cuando se hace el envío de un archivo por medio de un
+	método POST, PHP inicializa una variable superglobal con
+	información que puede ser usada directamente con este
+	método. Por ejemplo:</p>
+	<p class="doc">$_FILES['userfile']['name'] es el nombre original del archivo<br>
+	$_FILES['userfile']['type'] es el tipo mime del archivo proporcionado por el navegador<br>
+	$_FILES['userfile']['tmp_name'] es la ubicación del archivo temporal almacenado</p>
+	<p class="doc">En el particular caso de necesitar embeber una imagen dentro de un correo,
+	es necesario crear el "Tag" correspondiente en el HTML del mensaje haciendo la
+	correcta referencia entre el "name" del archivo gráfico y su vínculo "src".
+	Para mayor información puede revisar los ejemplos que acompañan a esta clase.</p>
+	<p class="doc_bold">Parámetros</p>
+	<p class="doc_italic">file</p>
+	<p class="doc_param">Ubicación del archivo que se quiere adjuntar</p>
+	<p class="doc_italic">name</p>
+	<p class="doc_param">Nombre con el que se enviará el archivo</p>
+	<p class="doc_italic">type</p>
+	<p class="doc_param">Typo MIME del archivo que se quiere adjuntar</p>
+	<p class="doc_bold">Ejemplos</p>
+	<div class="doc_code"><span style="color: #000000">
+<span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">add_attachment</span><span style="color: #007700">(</span><span style="color: #0000BB">$_FILES</span><span style="color: #007700">[</span><span style="color: #DD0000">'userfile'</span><span style="color: #007700">][</span><span style="color: #DD0000">'tmp_name'</span><span style="color: #007700">],&nbsp;</span><span style="color: #0000BB">$_FILES</span><span style="color: #007700">[</span><span style="color: #DD0000">'userfile'</span><span style="color: #007700">][</span><span style="color: #DD0000">'name'</span><span style="color: #007700">],&nbsp;</span><span style="color: #0000BB">$_FILES</span><span style="color: #007700">[</span><span style="color: #DD0000">'userfile'</span><span style="color: #007700">][</span><span style="color: #DD0000">'type'</span><span style="color: #007700">]);<br />
+</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">add_attachment</span><span style="color: #007700">(</span><span style="color: #DD0000">'img/image_test.gif'</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">'myimage.gif'</span><span style="color: #007700">);</span></span></div>
+	<br>
+
+
+	<hr class="doc_hr"><br>
+	<a class="doc" name="add_bcc"></a><h3>add_bcc</h3>
+	<p class="doc_code">bool add_bcc(string mail_bcc, [string name])</p>
+	<p class="doc_bold">Descripción</p>
+	<p class="doc">Agrega una dirección de correo como copia al carbón oculto a las ya existentes,
+	la cual debe ser sintacticamente correcta devolviendo 'true' si se
+	añade con éxito o 'false' en caso contrario. Opcionalmente se
+	puede especificar un nombre de contacto.</p>
+	<p class="doc_bold">Parámetros</p>
+	<p class="doc_italic">mail_bcc</p>
+	<p class="doc_param">Correo electrónico del destinatario</p>
+	<p class="doc_italic">name</p>
+	<p class="doc_param">Nombre o texto del contacto</p>
+	<p class="doc_bold">Ejemplos</p>
+	<div class="doc_code"><span style="color: #000000">
+<span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">add_bcc</span><span style="color: #007700">(</span><span style="color: #DD0000">'foo@mail.com'</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">'Mr.&nbsp;Foo'</span><span style="color: #007700">);<br />
+</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">add_bcc</span><span style="color: #007700">(</span><span style="color: #DD0000">'bar@mail.com'</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">'Mr.&nbsp;Bar'</span><span style="color: #007700">);
+</span></span></div>
+	<br>
+
+
+	<hr class="doc_hr"><br>
+	<a class="doc" name="add_cc"></a><h3>add_cc</h3>
+	<p class="doc_code">bool add_cc(string mail_cc, [string name])</p>
+	<p class="doc_bold">Descripción</p>
+	<p class="doc">Agrega una dirección de correo como copia al carbón a las ya existentes,
+	la cual debe ser sintácticamente correcta devolviendo 'true' si se
+	añade con éxito o 'false' en caso contrario. Opcionalmente se
+	puede especificar un nombre de contacto.</p>
+	<p class="doc_bold">Parámetros</p>
+	<p class="doc_italic">mail_cc</p>
+	<p class="doc_param">Correo electrónico del destinatario</p>
+	<p class="doc_italic">name</p>
+	<p class="doc_param">Nombre o texto del contacto</p>
+	<p class="doc_bold">Ejemplos</p>
+<div class="doc_code"><span style="color: #000000">
+<span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">add_cc</span><span style="color: #007700">(</span><span style="color: #DD0000">'foo@mail.com'</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">'Mr.&nbsp;Foo'</span><span style="color: #007700">);<br />
+</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">add_cc</span><span style="color: #007700">(</span><span style="color: #DD0000">'bar@mail.com'</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">'Mr.&nbsp;Bar'</span><span style="color: #007700">);</span></span></div>
+	<br>
+
+
+<hr class="doc_hr"><br>
+	<a class="doc" name="add_content_attachment"></a><h3>add_content_attachment</h3>
+	<p class="doc_code">bool add_content_attachment(string content, string name, [string type])</p>
+	<p class="doc_bold">Descripción</p>
+	<p class="doc">Agrega un archivo adjunto al correo electrónico pasando directamente el contenido. Esta funci&oacute;n es especialmente &uacute;til cuando se generan contenidos directamente en c&oacute;digo, como podr&iacute;a ser archivos xml, pdf, imagenes, etc. que se quiera adjuntar. </p>
+	<p class="doc">En el parámetro 'content' se debe pasar el contenido directo. A diferencia de 'add_attachment' en este m&eacute;todo no se abrir&aacute; ningun archivo externo, ya que el contenido se pasa directamente.</p>
+	<p class="doc">En el particular caso de necesitar embeber una imagen dentro de un correo,
+	es necesario crear el "Tag" correspondiente en el HTML del mensaje haciendo la
+	correcta referencia entre el "name" del archivo gráfico y su vínculo "src".
+	Para mayor información puede revisar los ejemplos que acompañan a esta clase.</p>
+	<p class="doc_bold">Parámetros</p>
+	<p class="doc_italic">content</p>
+	<p class="doc_param">Contenido  a adjuntar como archivo </p>
+	<p class="doc_italic">name</p>
+	<p class="doc_param">Nombre con el que se enviará el archivo</p>
+	<p class="doc_italic">type</p>
+	<p class="doc_param">Typo MIME del archivo que se quiere adjuntar</p>
+	<p class="doc_bold">Ejemplos</p>
+	<div class="doc_code"><span style="color: #000000">
+<span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">add_content_attachment</span><span style="color: #007700">(</span><span style="color: #007700"><span class="Estilo1">&quot;This is the content of text file&quot;</span>,&nbsp;&quot;textfile.txt&quot;</span><span style="color: #007700">);</span></span></div>
+	<br>
+
+
+	<hr class="doc_hr"><br>
+	<a class="doc" name="add_reply_to"></a><h3>add_reply_to</h3>
+	<p class="doc_code">bool add_reply_to(string mail_reply_to, [string name])</p>
+	<p class="doc_bold">Descripción</p>
+	<p class="doc">Agrega una direcci&oacute;n de correo electrónico al cual se responderá cuando el usuario pulse
+	sobre su opcion de responder (reply) de su cliente de correo electronico.</p>
+	<p class="doc_bold">Parámetros</p>
+	<p class="doc_italic">mail_reply_to</p>
+	<p class="doc_param">Correo electrónico de Respuesta</p>
+	<p class="doc_italic">name</p>
+	<p class="doc_param">Nombre o texto del contacto</p>
+	<p class="doc_bold">Ejemplos</p>
+	<div class="doc_code"><span style="color: #000000">
+<span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">add_reply_to</span><span style="color: #007700">(</span><span style="color: #DD0000">'foo@mail.com'</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">'Mr.&nbsp;Foo'</span><span style="color: #007700">);<br />
+</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">add_reply_to</span><span style="color: #007700">(</span><span style="color: #DD0000">'bar@mail.com'</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">'Mr.&nbsp;Bar'</span><span style="color: #007700">);</span></span></div>
+	<br>
+
+
+
+	<hr class="doc_hr"><br>
+	<a class="doc" name="add_to"></a><h3>add_to</h3>
+	<p class="doc_code">bool add_to(string mail_to, [string name])</p>
+	<p class="doc_bold">Descripción</p>
+	<p class="doc">Agrega una dirección de correo destino a las ya existentes,
+	la cual debe ser sintácticamente correcta devolviendo 'true' si se
+	añade con éxito o 'false' en caso contrario. Opcionalmente se
+	puede especificar un nombre de contacto.</p>
+	<p class="doc_bold">Parámetros</p>
+	<p class="doc_italic">mail_to</p>
+	<p class="doc_param">Correo electronico del destinatario</p>
+	<p class="doc_italic">name</p>
+	<p class="doc_param">Nombre o texto del contacto</p>
+	<p class="doc_bold">Ejemplos</p>
+	<div class="doc_code"><span style="color: #000000">
+<span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">add_to</span><span style="color: #007700">(</span><span style="color: #DD0000">'foo@mail.com'</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">'Mr.&nbsp;Foo'</span><span style="color: #007700">);<br />
+</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">add_to</span><span style="color: #007700">(</span><span style="color: #DD0000">'bar@mail.com'</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">'Mr.&nbsp;Bar'</span><span style="color: #007700">);</span></span></div>
+	<br>
+
+
+	<hr class="doc_hr"><br>
+	<a class="doc" name="get_eml"></a><h3>get_eml</h3>
+	<p class="doc_code">string get_eml()</p>
+	<p class="doc_bold">Descripción</p>
+	<p class="doc">Devuelve el contenido del correo formado en formato EML que puede servir para archivarlo en una base de datos o archivos de texto. </p>
+	<p class="doc_bold">Ejemplos</p>
+	<div class="doc_code"><span style="color: #000000">
+<span style="color: #0000BB">$correo_eml&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">get_eml</span><span style="color: #007700">();
+</span></span></div>
+	<br>
+
+
+	<hr class="doc_hr"><br>
+	<a class="doc" name="get_smtp_log"></a><h3>get_smtp_log</h3>
+	<p class="doc_code">string get_smtp_log()</p>
+	<p class="doc_bold">Descripción</p>
+	<p class="doc">Devuelve el contenido de la conversaci&oacute;n entre esta clase y el SMTP.</p>
+	<p class="doc">Para hacer uso de esta funci&oacute;n es necesario establecer previamente la propiedad 'set_smtp_log' a 'true'. Esto es especialmente &uacute;til cuando se tiene alg&uacute;n problema con el env&iacute;o por SMTP y se desea revisar todos los comandos enviados y las respuestas del servidor SMTP. </p>
+	<p class="doc_bold">Ejemplos</p>
+	<div class="doc_code"><span style="color: #000000">
+<span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_smtp_log</span><span style="color: #007700">(</span><span style="color: #0000BB">true</span><span style="color: #007700">);<br />
+<br />if&nbsp;(</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">send</span><span style="color: #007700">()){<br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">"The&nbsp;MIME&nbsp;Mail&nbsp;has&nbsp;been&nbsp;sent"</span><span style="color: #007700">;<br />}<br />else&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">get_smtp_log</span><span style="color: #007700">();<br />}
+</span></span></div>
+	<br>
+
+
+	<hr class="doc_hr"><br>
+	<a class="doc" name="get_version"></a><h3>get_version</h3>
+	<p class="doc_code">string get_version()</p>
+	<p class="doc_bold">Descripción</p>
+	<p class="doc">Devuelve el numero de versi&oacute;n de esta clase. </p>
+	<p class="doc_bold">Ejemplos</p>
+	<div class="doc_code"><span style="color: #000000"><span style="color: #007700">echo&nbsp;</span><span style="color: #DD0000">"Nomad&nbsp;MIME&nbsp;Mail,&nbsp;version:&nbsp;"&nbsp;</span><span style="color: #007700">.</span><span style="color: #0000BB"> $mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">get_version</span><span style="color: #007700">();
+</span></span></div>
+	<br>
+
+
+	<hr class="doc_hr"><br>
+	<a class="doc" name="new_mail"></a><h3>new_mail</h3>
+	<p class="doc_code">void new_mail([string from], [string to], [string subject], [string text], [string html])</p>
+	<p class="doc_bold">Descripción</p>
+	<p class="doc">Esta función es una vía rápida para borrar todas las variables
+	generadas por un antiguo envío de correo sobre el mismo objeto y/o
+	para asignar de forma rápida algunas de las opciones para el envío
+	de un correo MIME</p>
+	<p class="doc">Todos los parámetros son opcionales</p>
+	<p class="doc_bold">Parámetros</p>
+	<p class="doc_italic">from</p>
+	<p class="doc_param">Correo electrónico del remitente</p>
+	<p class="doc_italic">to</p>
+	<p class="doc_param">Correo electrónico del destinatario</p>
+	<p class="doc_italic">subject</p>
+	<p class="doc_param">Asunto del correo</p>
+	<p class="doc_italic">text</p>
+	<p class="doc_param">Mensaje en Texto Plano</p>
+	<p class="doc_italic">html</p>
+	<p class="doc_param">Mensaje en HTML</p>
+	<p class="doc_bold">Ejemplos</p>
+	<div class="doc_code"><span style="color: #000000">
+<span style="color: #0000BB">$from&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #DD0000">"me@mail.com"</span><span style="color: #007700">;<br />
+</span><span style="color: #0000BB">$to&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #DD0000">"friend@mail.com"</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$subject&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #DD0000">"Hello&nbsp;friend"</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$text&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #DD0000">"This&nbsp;is&nbsp;my&nbsp;Text&nbsp;Plain&nbsp;Message"</span><span style="color: #007700">;<br /></span><span style="color: #0000BB">$html&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #DD0000">"&lt;p&gt;&lt;strong&gt;This&lt;/strong&gt;&nbsp;is&nbsp;mi&nbsp;message&nbsp;in&nbsp;HTML&lt;/p&gt;"</span><span style="color: #007700">;<br /><br /></span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">new_mail</span><span style="color: #007700">(</span><span style="color: #0000BB">$from</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$to</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$subject</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$text</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">$html</span><span style="color: #007700">);
+</span></span></div>
+	<br>
+
+
+	<hr class="doc_hr"><br>
+	<a class="doc" name="nomad_mimemail"></a><h3>nomad_mimemail</h3>
+	<p class="doc_code">void nomad_mimemail()</p>
+	<p class="doc_bold">Descripción</p>
+	<p class="doc">Este es el constructor de la clase</p>
+	<p class="doc_bold">Parámetros</p>
+	<p class="doc">No tiene parámetros</p>
+	<p class="doc_bold">Ejemplos</p>
+	<div class="doc_code"><span style="color: #000000"><span style="color: #0000BB">$mimemail&nbsp;</span><span style="color: #007700">=&nbsp;new&nbsp;</span><span style="color: #0000BB">nomad_mimemail</span><span style="color: #007700">();</span></span></div>
+	<br>
+
+
+	<hr class="doc_hr"><br>
+	<a class="doc" name="send"></a><h3>send</h3>
+	<p class="doc_code">bool send()</p>
+	<p class="doc_bold">Descripción</p>
+	<p class="doc">Envía el correo MIME con las características agregadas en
+	la composición del mensaje.</p>
+	<p class="doc">Si el envío se ha realizado con éxito devuelve 'true' en
+	caso contrario 'false'</p>
+	<p class="doc_bold">Parámetros</p>
+	<p class="doc">No tiene parametros</p>
+	<p class="doc_bold">Ejemplos</p>
+	<div class="doc_code"><span style="color: #000000"><span style="color: #007700">if&nbsp;(</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">send</span><span style="color: #007700">()){<br />
+	  &nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">"The&nbsp;MIME&nbsp;Mail&nbsp;has&nbsp;been&nbsp;sent"</span><span style="color: #007700">;<br />
+	  }<br />
+	  else&nbsp;{<br />
+	  &nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">"An&nbsp;error&nbsp;has&nbsp;occurred,&nbsp;mail&nbsp;was&nbsp;not&nbsp;sent"</span><span style="color: #007700">;<br />
+} </span></span></div>
+	<br>
+
+
+	<hr class="doc_hr"><br>
+	<a class="doc" name="set_bcc"></a><h3>set_bcc</h3>
+	<p class="doc_code">bool set_bcc(string mail_bcc, [string name])</p>
+	<p class="doc_bold">Descripción</p>
+	<p class="doc">Establece una dirección de correo como copia al carbón oculta 'bcc',
+	el cual debe ser sintácticamente correcto devolviendo
+	'true', en caso contrario devuelve 'false'. Opcionalmente se
+	puede especificar un nombre de contacto</p>
+	<p class="doc">Nota: Este método borra cualquier correo o correos existentes
+	anteriormente en la variable 'mail_bcc'</p>
+	<p class="doc_bold">Parámetros</p>
+	<p class="doc_italic">mail_bcc</p>
+	<p class="doc_param">Correo electrónico del destinatario</p>
+	<p class="doc_italic">name</p>
+	<p class="doc_param">Nombre o texto del contacto</p>
+	<p class="doc_bold">Ejemplos</p>
+	<div class="doc_code"><span style="color: #000000"><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span class="Estilo1">set_bcc</span><span style="color: #007700">(</span><span style="color: #DD0000">'jhon@mail.com'</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">'Mr.&nbsp;Doe'</span><span style="color: #007700">);</span></span></div>
+	<br>
+
+
+	<hr class="doc_hr"><br>
+	<a class="doc" name="set_charset"></a><h3>set_charset</h3>
+	<p class="doc_code">void set_charset(string charset)</p>
+	<p class="doc_bold">Descripción</p>
+	<p class="doc">Establece el juego de caracteres que será usado al momento de
+	generar el correo electrónico</p>
+	<p class="doc_bold">Parámetros</p>
+	<p class="doc_italic">charset</p>
+	<p class="doc_param">Juego de Caracteres válido</p>
+	<p class="doc_bold">Ejemplos</p>
+	<div class="doc_code"><span style="color: rgb(255, 128, 0);">$mimemail</span><span style="color: rgb(0, 0, 0);">-&gt;set_charset</span><span style="color: rgb(0, 128, 0);">(</span><span style="color: rgb(128, 128, 128);">"ISO-8859-1"</span><span style="color: rgb(0, 128, 0);">);</span></div>
+	<br>
+
+
+	<hr class="doc_hr"><br>
+	<a class="doc" name="set_cc"></a><h3>set_cc</h3>
+	<p class="doc_code">bool set_cc(string mail_cc, [string name])</p>
+	<p class="doc_bold">Descripción</p>
+	<p class="doc">Establece una dirección de correo como copia al carbón 'cc',
+	el cual debe ser sintácticamente correcto devolviendo
+	'true', en caso contrario devuelve 'false'. Opcionalmente se
+	puede especificar un nombre de contacto</p>
+	<p class="doc">Nota: Este método borra cualquier correo o correos existentes
+	anteriormente en la variable 'mail_cc'</p>
+	<p class="doc_bold">Parámetros</p>
+	<p class="doc_italic">mail_cc</p>
+	<p class="doc_param">Correo electrónico del destinatario</p>
+	<p class="doc_italic">name</p>
+	<p class="doc_param">Nombre o texto del contacto</p>
+	<p class="doc_bold">Ejemplos</p>
+	<div class="doc_code"><span style="color: #000000"><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span class="Estilo1">set_cc</span><span style="color: #007700">(</span><span style="color: #DD0000">'jhon@mail.com'</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">'Mr.&nbsp;Doe'</span><span style="color: #007700">);</span></span></div>
+	<br>
+
+
+	<hr class="doc_hr"><br>
+	<a class="doc" name="set_from"></a><h3>set_from</h3>
+	<p class="doc_code">void set_from(string mail_from, [string name])</p>
+	<p class="doc_bold">Descripción</p>
+	<p class="doc">Establece la dirección de correo del remitente, el cual debe ser
+	sintácticamente correcto. Opcionalmente se puede especificar
+	un nombre de contacto</p>
+	<p class="doc_bold">Parámetros</p>
+	<p class="doc_italic">mail_from</p>
+	<p class="doc_param">Correo electrónico del remitente</p>
+	<p class="doc_italic">name</p>
+	<p class="doc_param">Nombre o texto del contacto</p>
+	<p class="doc_bold">Ejemplos</p>
+	<div class="doc_code">
+    <span style="color: #000000"><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span class="Estilo1">set_from</span><span style="color: #007700">(</span><span style="color: #DD0000">'fake@mail.com'</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">'No Reply'</span><span style="color: #007700">);</span></span></div>
+	<br>
+
+
+	<hr class="doc_hr"><br>
+	<a class="doc" name="set_html"></a><h3>set_html</h3>
+	<p class="doc_code">void set_html(string html)</p>
+	<p class="doc_bold">Descripción</p>
+	<p class="doc">Establece el mensaje del correo en HTML</p>
+	<p class="doc_bold">Parámetros</p>
+	<p class="doc_italic">html</p>
+	<p class="doc_param">Mensaje en HTML</p>
+	<p class="doc_bold">Ejemplos</p>
+	<div class="doc_code"><span style="color: #000000">
+<span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_html</span><span style="color: #007700">(</span><span style="color: #DD0000">'&lt;p&gt;&lt;strong&gt;This&lt;/strong&gt;&nbsp;is&nbsp;mi&nbsp;message&nbsp;in&nbsp;HTML&lt;/p&gt;'</span><span style="color: #007700">);
+</span></span></div>
+	<br>
+
+
+	<hr class="doc_hr"><br>
+	<a class="doc" name="set_reply_to"></a><h3>set_reply_to</h3>
+	<p class="doc_code">bool set_reply_to(string mail_reply_to, [string name])</p>
+	<p class="doc_bold">Descripción</p>
+	<p class="doc">Establece el correo electrónico al cual se responderá cuando el usuario pulse
+	sobre su opcion de responder (reply) de su cliente de correo electronico.</p>
+	<p class="doc_bold">Parámetros</p>
+	<p class="doc_italic">mail_reply_to</p>
+	<p class="doc_param">Correo electrónico de Respuesta</p>
+	<p class="doc_italic">name</p>
+	<p class="doc_param">Nombre o texto del contacto</p>
+	<p class="doc_bold">Ejemplos</p>
+	<div class="doc_code"><span style="color: #000000"><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_reply_to</span><span style="color: #007700">(</span><span style="color: #DD0000">'me@mail.com'</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">'Your Nightmare'</span><span style="color: #007700">);</span></span></div>
+	<br>
+
+
+	<hr class="doc_hr"><br>
+	<a class="doc" name="set_return_path"></a><h3>set_return_path</h3>
+	<p class="doc_code">bool set_return_path(string mail_return_path)</p>
+	<p class="doc_bold">Descripción</p>
+	<p class="doc">Establece la dirección del regreso de correo, en muchas ocaciones
+	se usa para indicar a que correo se debe de enviar en caso de error o
+	de no existir un correo destino.</p>
+	<p class="doc_bold">Parámetros</p>
+	<p class="doc_italic">mail_return_path</p>
+	<p class="doc_param">Correo electrónico del regreso del correo</p>
+	<p class="doc_bold">Ejemplos</p>
+	<div class="doc_code"><span style="color: #000000">
+<span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_return_path</span><span style="color: #007700">(</span><span style="color: #DD0000">'hostmaster@mail.com'</span><span style="color: #007700">);
+</span></span></div>
+	<br>
+
+
+<hr class="doc_hr"><br>
+	<a class="doc" name="set_smtp_auth"></a><h3>set_smtp_auth</h3>
+	<p class="doc_code">bool set_smtp_auth(string user, string pass)</p>
+	<p class="doc_bold">Descripción</p>
+	<p class="doc">Establece el nombre de usuario y contrase&ntilde;a requer&iacute;do por el servidor SMTP. Para que este Metodo funcione, es necesario llamar a 'set_smtp_host', en el cual se declara cual es el host que tiene el SMTP a utilizar.</p>
+	<p class="doc">Solo es necesario llamar a este m&eacute;todo cuando se requiera usar SMTP con autentificaci&oacute;n, </p>
+	<p class="doc_bold">Parámetros</p>
+	<p class="doc_italic">user</p>
+	<p class="doc_param">Nombre de usuario del SMTP con autenticación, en muchos casos el nombre de usuario es el correo.</p>
+	<p class="doc_italic">pass</p>
+	<p class="doc_param">Contraseña de la cuenta de correo en el SMTP</p>
+	<p class="doc_bold">Ejemplos</p>
+	<div class="doc_code"><span style="color: #000000"><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_smtp_host</span><span style="color: #007700">(</span><span style="color: #DD0000">"domain.com"</span><span style="color: #007700">);<br />
+	</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_smtp_auth</span><span style="color: #007700">(</span><span style="color: #DD0000">"user"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"pass"</span><span style="color: #007700">);<br />
+	<br />
+	if&nbsp;(</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">send</span><span style="color: #007700">()){<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">"The&nbsp;MIME&nbsp;Mail&nbsp;has&nbsp;been&nbsp;sent"</span><span style="color: #007700">;<br />
+	}<br />
+	else&nbsp;{<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">"An&nbsp;error&nbsp;has&nbsp;occurred,&nbsp;mail&nbsp;was&nbsp;not&nbsp;sent"</span><span style="color: #007700">;<br />
+	}</span></span></div>
+	<br>
+
+
+<hr class="doc_hr"><br>
+	<a class="doc" name="set_smtp_host"></a><h3>set_smtp_host</h3>
+	<p class="doc_code">bool set_smtp_host(string host, [int port])</p>
+	<p class="doc_bold">Descripción</p>
+	<p class="doc">Establece el host donde se conectar&aacute; por SMTP para enviar el correo. Llamar a este m&eacute;todo establece autom&aacute;ticamente que el correo se enviar&aacute; v&iacute;a SMTP.</p>
+	<p class="doc">En caso de no necesitar env&iacute;ar el correo por SMTP, no es necesario llamar a este m&eacute;todo, y dejar que el correo se env&iacute;e por la funci&oacute;n 'mail' de PHP.</p>
+	<p class="doc">Si requiere de autenticaci&oacute;n por SMTP deber&aacute; de llamar tambien a la funci&oacute;n 'set_smtp_auth' </p>
+	<p class="doc_bold">Parámetros</p>
+	<p class="doc_italic">host</p>
+	<p class="doc_param">El nombre de dominio o IP a la que esta clase se conectar&aacute; para enviar el correo. </p>
+	<p class="doc_italic">port</p>
+	<p class="doc_param">Opcionalmente puede declarar el puerto a conectarse en el servidor, por defecto el puerto esta establecido al 25</p>
+	<p class="doc_bold">Ejemplos</p>
+	<div class="doc_code"><span style="color: #000000"><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_smtp_host</span><span style="color: #007700">(</span><span style="color: #DD0000">"domain.com"</span><span style="color: #007700">);<br />
+    </span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_smtp_auth</span><span style="color: #007700">(</span><span style="color: #DD0000">"user"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"pass"</span><span style="color: #007700">);<br />
+    <br />
+if&nbsp;(</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">send</span><span style="color: #007700">()){<br />
+&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">"The&nbsp;MIME&nbsp;Mail&nbsp;has&nbsp;been&nbsp;sent"</span><span style="color: #007700">;<br />
+}<br />
+else&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">"An&nbsp;error&nbsp;has&nbsp;occurred,&nbsp;mail&nbsp;was&nbsp;not&nbsp;sent"</span><span style="color: #007700">;<br />
+}</span></span></div>
+	<br>
+
+
+	<hr class="doc_hr"><br>
+	<a class="doc" name="set_smtp_log"></a><h3>set_smtp_log</h3>
+	<p class="doc_code">void set_smtp_log(bool log)</p>
+	<p class="doc_bold">Descripción</p>
+	<p class="doc">Establece que se guarde toda la conversaci&oacute;n entre esta clase y un SMTP, que despues podr&aacute; ser recuperador por medio de la funci&oacute;n 'get_smtp_log'. Esto es especialmente &uacute;til cuando se tiene alg&uacute;n problema con el env&iacute;o por SMTP y se desea revisar todos los comandos enviados y las respuestas del servidor SMTP.</p>
+	<p class="doc_bold">Parámetros</p>
+	<p class="doc_italic">log</p>
+	<p class="doc_param">Si se desea recuperar la conversaci&oacute;n con el SMTP debe declararse en true. Se encuentra por defecto en 'false'.</p>
+	<p class="doc_bold">Ejemplos</p>
+	<div class="doc_code"><span style="color: #000000"><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_smtp_log</span><span style="color: #007700">(</span><span style="color: #0000BB">true</span><span style="color: #007700">);<br />
+          <br />
+          if&nbsp;(</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">send</span><span style="color: #007700">()){<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">"The&nbsp;MIME&nbsp;Mail&nbsp;has&nbsp;been&nbsp;sent"</span><span style="color: #007700">;<br />
+          }<br />
+          else&nbsp;{<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">get_smtp_log</span><span style="color: #007700">();<br />
+    } </span></span></div>
+	<br>
+
+
+
+	<hr class="doc_hr"><br>
+	<a class="doc" name="set_subject"></a><h3>set_subject</h3>
+	<p class="doc_code">bool set_subject(string subject)</p>
+	<p class="doc_bold">Descripción</p>
+	<p class="doc">Establece el asunto del correo</p>
+	<p class="doc_bold">Parámetros</p>
+	<p class="doc_italic">subject</p>
+	<p class="doc_param">Asunto del correo</p>
+	<p class="doc_bold">Ejemplos</p>
+	<div class="doc_code"><span style="color: #000000">
+<span style="color: #0000BB">
+$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_subject</span><span style="color: #007700">(</span><span style="color: #DD0000">'Contact&nbsp;mail&nbsp;from&nbsp;my&nbsp;page'</span><span style="color: #007700">);
+</span></span></div>
+	<br>
+
+
+	<hr class="doc_hr"><br>
+	<a class="doc" name="set_text"></a><h3>set_text</h3>
+	<p class="doc_code">void set_text(string text)</p>
+	<p class="doc_bold">Descripción</p>
+	<p class="doc">Establece el contenido del correo en texto plano</p>
+	<p class="doc_bold">Parámetros</p>
+	<p class="doc_italic">text</p>
+	<p class="doc_param">Mensaje en texto plano</p>
+	<p class="doc_bold">Ejemplos</p>
+	<div class="doc_code"><span style="color: #000000">
+<span style="color: #0000BB">
+$mimemail</span><span style="color: #007700">-&gt;</span><span style="color: #0000BB">set_text</span><span style="color: #007700">(</span><span style="color: #DD0000">'This&nbsp;is&nbsp;mi&nbsp;message&nbsp;in&nbsp;plain&nbsp;text'</span><span style="color: #007700">);
+</span></span></div>
+	<br>
+
+
+	<hr class="doc_hr"><br>
+	<a class="doc" name="set_to"></a><h3>set_to</h3>
+	<p class="doc_code">bool set_to(string mail_to, [string name])</p>
+	<p class="doc_bold">Descripción</p>
+	<p class="doc">Establece una dirección de correo destino, el cual debe ser
+	sintácticamente correcto y devuelve 'true', en caso contrario
+	devuelve 'false'. Opcionalmente se puede especificar un nombre
+	de contacto</p>
+	<p class="doc">Nota: Este método borra cualquier correo o correos existentes
+	anteriormente en la variable 'mail_to'</p>
+	<p class="doc_bold">Parámetros</p>
+	<p class="doc_italic">mail_to</p>
+	<p class="doc_param">Correo electrónico del destinatario</p>
+	<p class="doc_italic">name</p>
+	<p class="doc_param">Nombre o texto del contacto</p>
+	<p class="doc_bold">Ejemplos</p>
+	<div class="doc_code"><span style="color: #000000"><span style="color: #0000BB">$mimemail</span><span style="color: #007700">-&gt;</span><span class="Estilo1">set_to</span><span style="color: #007700">(</span><span style="color: #DD0000">'jhon@mail.com'</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">'Mr.&nbsp;Doe'</span><span style="color: #007700">);</span></span></div>
+	<br>
+
+
+
+	<br>
+<!-- Termina Referencia de las Funciones -->
+
+<!-- Comienza Cambios en Versiones -->
+	<a class="doc" name="m-4"></a><h2 class="doc_h2">4. Cambios en Versiones.</h2>
+	<p class="doc_bold">Versión 1.0</p>
+	<ul>
+	<li class="doc_li">Versión de publicación en phpclasses.org. Clase totalmente escrita en español</li>
+	</ul>
+	<p class="doc_bold">Versión 1.2</p>
+	<ul>
+	<li class="doc_li">Traducción de la clase al inglés. Se descarta la versión en Español</li>
+	<li class="doc_li">Creación de la ducumentación en Español</li>
+	<li class="doc_li">Variable de charset</li>
+	<li class="doc_li">Se arregló un bug que no permitía que una
+	misma imagen embebida se repitiera varias veces en el HTML</li>
+	<li class="doc_li">Soporte para nombres largos de windows en los adjuntos</li>
+	</ul>
+	<p class="doc_bold">Versión 1.3</p>
+	<ul>
+	<li class="doc_li">Soporte para 'Return Path'</li>
+	<li class="doc_li">Soporte de imagenes de 'background'</li>
+	<li class="doc_li">Soporte para CSS embebido</li>
+	<li class="doc_li">Soporte para correo de Respuesta (reply)</li>
+	<li class="doc_li">Agregado el metodo get_eml</li>
+	<li class="doc_li">Corrección de gran parte de la sintaxis del codigo</li>
+	<li class="doc_li">Optimización en la búsqueda de Imagenes embebidas</li>
+	<li class="doc_li">Corrección de algunos bugs</li>
+	</ul>
+	<p class="doc_bold">Versión 1.4</p>
+	<ul>
+	<li class="doc_li">Cambio de nombre de "Nexus MIME Mail" a "Nomad MIME Mail"</li>
+	<li class="doc_li">Soporte para agregar contenido como adjunto 'add_content_attachment'</li>
+	<li class="doc_li">Soporte para más de un correo de respuesta 'add_reply_to'</li>
+	<li class="doc_li">Soporte para envío por SMTP 'set_smtp_host'</li>
+	<li class="doc_li">Soporte para envío por SMTP autenticado 'set_smtp_auth'</li>
+	<li class="doc_li">Soporte para debugear la conversación entre el script y el SMTP 'set_smtp_log' y 'get_smtp_log'</li>
+	<li class="doc_li">Codigo ducumentado estilo Doxygen</li>
+	<li class="doc_li">Corrección de algunos bugs</li>
+	<li class="doc_li">Actualización de la documentaci&oacute;n</li>
+	</ul>
+	<p class="doc_bold">Versión 1.5</p>
+	<ul>
+	<li class="doc_li">Arreglado problema de error "UNDISCLOSED RECIPIENTS"</li>
+	<li class="doc_li">Arreglado error de sintaxis en "_build_headers"</li>
+	<li class="doc_li">Arreglado problemas de charset de texto plano en "_build_body"</li>
+	<li class="doc_li">Se agregó el método "set_charset()"</li>
+	<li class="doc_li">Nuevo logotipo y página del proyecto</li>
+	<li class="doc_li">Actualización de la documentaci&oacute;n</li>
+	</ul>
+	<p class="doc_bold">Versión 1.6</p>
+	<ul>
+	<li class="doc_li">Cambio de Cabeceras de la Librería</li>
+	<li class="doc_li">Arreglado problema de saltos de linea en Qmail</li>
+	<li class="doc_li">Cambio de estilo de comentarios a phpDocumentor</li>
+	<li class="doc_li">Arreglado problema con _php_version_check()</li>
+	<li class="doc_li">Arreglado problema con Correos Duplicados</li>
+	<li class="doc_li">Actualización de la documentaci&oacute;n</li>
+	</ul>
+	<br>
+<!-- Termina Cambios en Versiones -->
+
+<!-- Comienza Por hacer -->
+	<a class="doc" name="m-5"></a><h2 class="doc_h2">5. Por hacer.</h2>
+	<ul>
+	<li class="doc_li">Revisar que no se repitan correos electrónicos en
+	to, cc y bcc</li>
+	<li class="doc_li">Un parser para convertir de HTML a texto plano mas sofisticado</li>
+	<li class="doc_li">Que no se repitan mismos nombres en adjuntos</li>
+	</ul>
+	<br>
+<!-- Termina Por Hacer -->
+
+<!-- Comienza Colaboradores-->
+	<a class="doc" name="m-6"></a><h2 class="doc_h2">6. Colaboradores.</h2>
+	<p class="doc">Agradecemos a las personas que han dado su apoyo y soporte
+	para el desarrollo de esta clase.</p>
+	<ul>
+	<li class="doc_li"><a class="doc" href="mailto:P.Tomicki at digitalone dot pl">Pawel Tomicki</a></li>
+	<li class="doc_li"><a class="doc" href="mailto:egarcia at egm dot as">Enrique García M.</a></li>
+	<li class="doc_li"><a class="doc" href="mailto:megazoidz at gmail dot com">Ulises Hernandez</a></li>
+	</ul>
+	<br>
+<!-- Termina Colaboradores -->
+
+<!-- Comienza Licencia -->
+	<a class="doc" name="m-7"></a><h2 class="doc_h2">7. Licencia.</h2>
+
+	<p class="doc">This library is free software; you can redistribute it and/or modify
+	it under the terms of the GNU Lesser General Public License as published by the Free
+	Software Foundation; either version 2.1 of the License, or (at your option) any
+	later version.</p>
+
+	<p class="doc">This library is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+	or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License
+	for more details.</p>
+
+ 	<p class="doc">You should have received a copy of the GNU Lesser General Public
+ 	License along with this library; if not, write to the Free Software Foundation,
+ 	Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA </p>
+	<br>
+<!-- Termina Licencia -->
+
+</body>
+</html>
