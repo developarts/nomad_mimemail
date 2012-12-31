@@ -1,7 +1,7 @@
 Nomad MIME Mail
 ==============
 
-# Description.
+## Description.
 Nomad MIME Mail, is a PHP class for handling and sending mail MIME type, with support for the dispatch by SMTP and SMTP Auth
 
 Currently, this class supports:
@@ -14,7 +14,7 @@ Currently, this class supports:
 
 It also supports multiple e-mail addresses for sending (to), with a copy (cc) and with a blind carbon copy (bcc), as well as several images embedded in HTML and various attachments
 
-# Quick Reference.
+## Quick Reference.
 Attached to this class and documentation is a file called 'nomad_mimemail.test.php' where is a script with an example of sending mail with text, HTML, Image and Deputy Embedded sent via SMTP. .
 
 To use MIME Mail Nomad is necessary to declare the object as follows:
@@ -23,11 +23,11 @@ include ('nomad_mimemail.inc.php');
 $mimemail = new nomad_mimemail();
 ```
 
-## Plain Text.
+### Plain Text.
 Normally this is how the function 'mail ()' would operate. PHP, however in this version is created so a little different because it sent the body of the message headers and MIME type
 
 ```php
- $mimemail->set_from("me@mail.com");
+$mimemail->set_from("me@mail.com");
 $mimemail->set_to("friend@mail.com");
 $mimemail->set_subject("Nomad MIME Mail: Plain Text");
 $mimemail->set_text("This is a MIME Mail with:\n\n- Plain Text");
@@ -39,7 +39,7 @@ if ($mimemail->send()) {
 } 
 ```
 
-## Text and HTML.
+### Plain Text and HTML.
 
 Example of sending mail with text and HTML
 ```php
@@ -56,7 +56,7 @@ if ($mimemail->send()) {
 } 
 ```
 
-## Plaintext with Attachments.
+### Plain Text with Attachments.
 
 Example of creating an email with an attachment and Plain Text. You can do more than adding attachments with the 'add_attachment' method. For more information, check the function reference guide.
 ```php
@@ -73,7 +73,7 @@ if ($mimemail->send()) {
 }
 ```
 
-## Plain Text and HTML with Attachments
+### Plain Text and HTML with Attachments
 
 Example to create an email with Plain Text, HTML and a deputy. You can add more than one attachment using the 'add_attachment'.
 ```php
@@ -91,7 +91,7 @@ if ($mimemail->send()) {
 } 
 ```
 
-## Plain Text and HTML with Embedded Images
+### Plain Text and HTML with Embedded Images
 
 Example of creating an email with HTML, plain text and an Embedded Image. For the image embedded function, the attachment must have the same name as indicated on the tag 'IMG' HTML message.
 ```php
@@ -109,7 +109,7 @@ if ($mimemail->send()) {
 }
 ```
 
-## Plain Text and HTML with Embedded Image and Attachments
+### Plain Text and HTML with Embedded Image and Attachments
 
 Example of creating an email with HTML, plain text, an embedded image and an attachment. For the embedded image to work, the attachment archive must have the same name as indicated on the tag 'IMG'
 ```php
@@ -128,7 +128,7 @@ if ($mimemail->send()) {
 }
 ```
 
-## Sending Authenticated SMTP
+### Sending Authenticated SMTP
 
 To send mail via SMTP it is necessary to call the 'set_smtp_host' method and to send mail using SMTP authentication it is necessary to use the 'set_smtp_auth' method. 
 ```php
