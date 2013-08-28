@@ -812,6 +812,11 @@ class nomad_mimemail
 	 */
 	function _build_body()
 	{
+		$bit_mode='7bit';
+		if ($this->charset=='UTF-8')
+		{
+			$bit_mode='quoted-printable';
+		}
 		switch ($this->_parse_elements()){
 			case 1: // Plain Text
 				$this->_build_header("Content-Type: text/plain; charset=\"$this->charset\"");
@@ -821,11 +826,11 @@ class nomad_mimemail
 				$this->_build_header("Content-Type: multipart/alternative; boundary=\"$this->boundary_alt\"");
 				$this->mail_body .= "--" . $this->boundary_alt . BR;
 				$this->mail_body .= "Content-Type: text/plain; charset=\"$this->charset\"" . BR;
-				$this->mail_body .= "Content-Transfer-Encoding: 7bit" . BR . BR;
+				$this->mail_body .= "Content-Transfer-Encoding: $bit_mode" . BR . BR;
 				$this->mail_body .= $this->mail_text . BR . BR;
 				$this->mail_body .= "--" . $this->boundary_alt . BR;
 				$this->mail_body .= "Content-Type: text/html; charset=\"$this->charset\"" . BR;
-				$this->mail_body .= "Content-Transfer-Encoding: 7bit" . BR . BR;
+				$this->mail_body .= "Content-Transfer-Encoding: $bit_mode" . BR . BR;
 				$this->mail_body .= $this->mail_html . BR;
 				$this->mail_body .= "--" . $this->boundary_alt . "--" . BR;
 				break;
@@ -833,7 +838,7 @@ class nomad_mimemail
 				$this->_build_header("Content-Type: multipart/mixed; boundary=\"$this->boundary_mix\"");
 				$this->mail_body .= "--" . $this->boundary_mix . BR;
 				$this->mail_body .= "Content-Type: text/plain; charset=\"$this->charset\"" . BR;
-				$this->mail_body .= "Content-Transfer-Encoding: 7bit" . BR . BR;
+				$this->mail_body .= "Content-Transfer-Encoding: $bit_mode" . BR . BR;
 				$this->mail_body .= $this->mail_text . BR . BR;
 				foreach($this->attachments as $value){
 					$this->mail_body .= "--" . $this->boundary_mix . BR;
@@ -872,11 +877,11 @@ class nomad_mimemail
 				$this->mail_body .= "Content-Type: multipart/alternative; boundary=\"$this->boundary_alt\"" . BR . BR;
 				$this->mail_body .= "--" . $this->boundary_alt . BR;
 				$this->mail_body .= "Content-Type: text/plain; charset=\"$this->charset\"" . BR;
-				$this->mail_body .= "Content-Transfer-Encoding: 7bit" . BR . BR;
+				$this->mail_body .= "Content-Transfer-Encoding: $bit_mode" . BR . BR;
 				$this->mail_body .= $this->mail_text . BR . BR;
 				$this->mail_body .= "--" . $this->boundary_alt . BR;
 				$this->mail_body .= "Content-Type: text/html; charset=\"$this->charset\"" . BR;
-				$this->mail_body .= "Content-Transfer-Encoding: 7bit" . BR . BR;
+				$this->mail_body .= "Content-Transfer-Encoding: $bit_mode" . BR . BR;
 				$this->mail_body .= $this->mail_html . BR . BR;
 				$this->mail_body .= "--" . $this->boundary_alt . "--" . BR . BR;
 				foreach($this->attachments as $value){
@@ -899,11 +904,11 @@ class nomad_mimemail
 				$this->mail_body .= "Content-Type: multipart/alternative; boundary=\"$this->boundary_alt\"" . BR . BR;
 				$this->mail_body .= "--" . $this->boundary_alt . BR;
 				$this->mail_body .= "Content-Type: text/plain; charset=\"$this->charset\"" . BR;
-				$this->mail_body .= "Content-Transfer-Encoding: 7bit" . BR . BR;
+				$this->mail_body .= "Content-Transfer-Encoding: $bit_mode" . BR . BR;
 				$this->mail_body .= $this->mail_text . BR . BR;
 				$this->mail_body .= "--" . $this->boundary_alt . BR;
 				$this->mail_body .= "Content-Type: text/html; charset=\"$this->charset\"" . BR;
-				$this->mail_body .= "Content-Transfer-Encoding: 7bit" . BR . BR;
+				$this->mail_body .= "Content-Transfer-Encoding: $bit_mode" . BR . BR;
 				$this->mail_body .= $this->mail_html . BR . BR;
 				$this->mail_body .= "--" . $this->boundary_alt . "--" . BR . BR;
 				foreach($this->attachments as $value){
