@@ -1,5 +1,5 @@
 {
-    "name": "nomad_mimemail",
+    "name": "developerarts/nomad_mimemail",
     "type": "library",
     "description": "Nomad MIME Mail, is a PHP class for handling and sending mail MIME type, with support for the dispatch by SMTP and SMTP Auth",
     "keywords": ["mail", "php","smtp"],
