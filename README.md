@@ -1,8 +1,15 @@
-Nomad MIME Mail
-==============
+# Nomad MIME Mail
+
+Nomad MIME Mail, is a PHP class for handling and sending mail MIME type, with support for the dispatch by SMTP and SMTP Auth
+
+![Banner](https://developarts.com/bl-content/uploads/banner_nomad_mimemail.png)
+![GitHub](https://img.shields.io/github/license/developarts/nomad_mimemail?style=for-the-badge)
+![GitHub tag (latest by date)](https://img.shields.io/github/v/release/developarts/nomad_mimemail?style=for-the-badge)
+![GitHub All Releases](https://img.shields.io/github/downloads/developarts/nomad_mimemail/total?style=for-the-badge)
+[![Donate with PayPal](https://img.shields.io/badge/PayPal-Donate-yellow.svg?style=for-the-badge)](https://www.paypal.me/developarts)
+
 
 ## Description.
-Nomad MIME Mail, is a PHP class for handling and sending mail MIME type, with support for the dispatch by SMTP and SMTP Auth
 
 Currently, this class supports:
 - Plain Text
