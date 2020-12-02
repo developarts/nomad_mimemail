@@ -4,7 +4,7 @@
     "description": "Nomad MIME Mail, is a PHP class for handling and sending mail MIME type, with support for the dispatch by SMTP and SMTP Auth",
     "keywords": ["mail", "php","smtp", "mime", "attachment"],
     "homepage": "https://github.com/developarts/nomad_mimemail",
-    "license": "BSD",
+    "license": "AGPL-3.0-or-later",
     "authors": [
         {
             "name": "Alejandro García",
