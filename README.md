@@ -164,3 +164,9 @@ if ($mimemail->send()) {
 }
 ```
 If so, I ask you to leave your report in The Forum where this kind of try to adapt as much as possible the response received from SMTP.
+
+
+## Stats
+
+
+![Alt](https://repobeats.axiom.co/api/embed/f1116c13f863299d69483f8fa7a45076b329da16.svg "Repobeats analytics image")
